@@ -1,0 +1,33 @@
+{
+  "name": "@free-air/cli",
+  "version": "1.0.0",
+  "description": "Claude Code 配置管理工具（API 提供商切换 + 扩展管理）",
+  "bin": {
+    "free": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "postinstall": "node ./dist/postinstall.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "keywords": ["claude-code", "cli", "agent", "extension", "anthropic", "provider"],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "simple-git": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}
