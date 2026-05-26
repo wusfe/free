@@ -1,6 +1,6 @@
 {
   "name": "@free-air/cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Claude Code 配置管理工具（API 提供商切换 + 扩展管理）",
   "bin": {
     "free": "./dist/index.js"
@@ -14,12 +14,24 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wusfe/free.git"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "keywords": ["claude-code", "cli", "agent", "extension", "anthropic", "provider"],
+  "author": "wusfe",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wusfe/free/issues"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
   "dependencies": {
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
