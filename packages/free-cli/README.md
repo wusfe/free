@@ -42,7 +42,9 @@ free switch kimi
 | `free add <type> <name> [--from <remote>] [--global\|--local]` | 安装扩展 |
 | `free remove <type> <name> [--global\|--local]` | 卸载扩展 |
 
-扩展类型：`agent` | `skill` | `command` | `memory`
+扩展类型：`agent` | `skill` | `command` | `memory` | `group`
+
+`group` 是带私有能力的 agent，安装后 agent 入口写入 `.claude/agents/`，配套的 skill/command/memory 写入 `.claude/agent-sort/<name>/`。
 
 安装到 `--global`（`~/.claude/`）或 `--local`（项目 `.claude/`）。默认全局。
 
@@ -112,8 +114,15 @@ free-extensions/
 │       └── SKILL.md
 ├── commands/
 │   └── review.md
-└── memory/
-    └── methodology.md
+├── memory/
+│   └── methodology.md
+└── groups/
+    ├── agent-code-review.md
+    └── agent-code-review/
+        ├── agent.md
+        ├── skills/
+        ├── commands/
+        └── memory/
 ```
 
 结构完全对应 `~/.claude/`，`free add` 从仓库复制到本地即可用。
@@ -140,10 +149,11 @@ type: general-purpose
 └── cache/            # git clone 缓存
 
 ~/.claude/
-├── agents/           # free add agent → 这里
+├── agents/           # agent / group 入口 → 这里
 ├── skills/           # free add skill → 这里
 ├── commands/         # free add command → 这里
-└── memory/           # free add memory → 这里
+├── memory/           # free add memory → 这里
+└── agent-sort/       # group 私有能力 → 这里
 ```
 
 ## 常见用法
@@ -157,6 +167,9 @@ free switch deepseek
 free remote add lab git@github.com:my/free-extensions.git
 free list --from lab
 free add agent code-reviewer --from lab --global
+
+# 安装 group（agent + 配套 skill/command/memory 一起到位）
+free add group agent-code-review --from lab --global
 
 # 项目级安装（只在当前项目生效）
 free add command review --from lab --local

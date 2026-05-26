@@ -5,7 +5,7 @@ import { validateType, exists, remove as removeExt } from '../writer';
 export function removeCommand(): Command {
   const cmd = new Command('remove')
     .description('移除扩展配置')
-    .argument('<type>', '类型：agent | skill | command | memory')
+    .argument('<type>', '类型：agent | skill | command | memory | group')
     .argument('<name>', '扩展名称')
     .option('-g, --global', '系统级（默认）')
     .option('-l, --local', '项目级')

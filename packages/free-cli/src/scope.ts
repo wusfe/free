@@ -25,8 +25,9 @@ export function getTypeDir(type: string): string {
     skill: 'skills',
     command: 'commands',
     memory: 'memory',
+    group: 'groups',
   };
   const dir = dirs[type];
-  if (!dir) throw new Error(`Unknown type: ${type}. Use agent|skill|command|memory`);
+  if (!dir) throw new Error(`Unknown type: ${type}. Use agent|skill|command|memory|group`);
   return dir;
 }

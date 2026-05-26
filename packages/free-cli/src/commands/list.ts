@@ -21,6 +21,7 @@ export function listCommand(): Command {
           skill: 'Skill',
           command: 'Command',
           memory: 'Memory',
+          group: 'Group',
         };
 
         for (const type of Object.keys(labels)) {
