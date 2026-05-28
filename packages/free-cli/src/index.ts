@@ -8,13 +8,14 @@ import { removeCommand } from './commands/remove';
 import { listCommand } from './commands/list';
 import { remoteCommand } from './commands/remote';
 import { gitCommand } from './commands/git';
+import { version } from '../package.json';
 
 const program = new Command();
 
 program
   .name('free')
   .description('Claude Code 配置管理工具（API 提供商切换 + 扩展管理）')
-  .version('1.0.0');
+  .version(version);
 
 program.addCommand(modelCommand());
 program.addCommand(shellCommand());
