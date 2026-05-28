@@ -1,8 +1,9 @@
 # @free-air/cli
 
-Claude Code 一站式配置工具。两个核心能力：
+Claude Code 一站式配置工具。三个核心能力：
 
 - **切换 API 提供商** — 在 Kimi、DeepSeek、MiniMax 等之间随时切换，像 nvm 切 Node 版本一样简单
+- **管理 Git 代理** — 一键开关 HTTPS/SSH 代理，仅当前会话生效
 - **管理扩展文件** — 从 Git 仓库一键安装 agent、skill、command、memory
 
 ## 快速开始
@@ -15,6 +16,9 @@ free model init
 
 # 填入 API key，然后切换
 free switch kimi
+
+# 开启 Git 代理（默认 7890 端口）
+free git on
 ```
 
 安装时自动注册 shell 钩子，`free switch <name>` 可直接在终端生效。
@@ -47,6 +51,19 @@ free switch kimi
 `group` 是带私有能力的 agent，安装后 agent 入口写入 `.claude/agents/`，配套的 skill/command/memory 写入 `.claude/agent-sort/<name>/`。
 
 安装到 `--global`（`~/.claude/`）或 `--local`（项目 `.claude/`）。默认全局。
+
+### git — Git 代理管理
+
+通过环境变量控制 Git 代理，仅当前终端会话生效。
+
+| 命令 | 说明 |
+|------|------|
+| `free git` | 查看当前代理状态（http_proxy、GIT_SSH_COMMAND） |
+| `free git on [proxy]` | 开启代理，可自定义地址或端口（默认 `http://127.0.0.1:7890`） |
+| `free git off` | 关闭代理 |
+| `free git test [url]` | 测试代理连通性（默认 `https://github.com/wusfe`） |
+
+`free git on` 同时设置 HTTPS 代理（`http_proxy` / `https_proxy`）和 SSH 代理（`GIT_SSH_COMMAND`），方式为环境变量而非 `git config --global`，关闭终端即失效。
 
 ### shell — Shell 集成
 
@@ -162,6 +179,12 @@ type: general-purpose
 # 切换模型
 free switch kimi
 free switch deepseek
+
+# 开启/关闭 Git 代理
+free git on              # 开启（默认 http://127.0.0.1:7890）
+free git on 1080         # 自定义端口
+free git test            # 测试连通性
+free git off             # 关闭
 
 # 从仓库安装 code-reviewer agent
 free remote add lab git@github.com:my/free-extensions.git

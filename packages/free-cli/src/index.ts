@@ -7,6 +7,7 @@ import { addCommand } from './commands/add';
 import { removeCommand } from './commands/remove';
 import { listCommand } from './commands/list';
 import { remoteCommand } from './commands/remote';
+import { gitCommand } from './commands/git';
 
 const program = new Command();
 
@@ -21,5 +22,6 @@ program.addCommand(remoteCommand());
 program.addCommand(addCommand());
 program.addCommand(removeCommand());
 program.addCommand(listCommand());
+program.addCommand(gitCommand());
 
 program.parse();

@@ -179,6 +179,8 @@ export function generateShellFunction(shellType: string): string {
 ${CMD_NAME}() {
   if [ "$1" = "switch" ]; then
     eval "$(command ${CMD_NAME} model switch "$2")"
+  elif [ "$1" = "git" ] && [ "$2" = "on" -o "$2" = "off" ]; then
+    eval "$(command ${CMD_NAME} git "$2" "$3")"
   else
     command ${CMD_NAME} "$@"
   fi
@@ -190,6 +192,8 @@ ${MARKER_END}`,
 ${CMD_NAME}() {
   if [ "$1" = "switch" ]; then
     eval "$(command ${CMD_NAME} model switch "$2")"
+  elif [ "$1" = "git" ] && [ "$2" = "on" -o "$2" = "off" ]; then
+    eval "$(command ${CMD_NAME} git "$2" "$3")"
   else
     command ${CMD_NAME} "$@"
   fi
@@ -201,6 +205,8 @@ ${MARKER_END}`,
 function ${CMD_NAME}
   if test "$argv[1]" = "switch"
     eval (command ${CMD_NAME} model switch $argv[2] | source)
+  else if test "$argv[1]" = "git"; and test "$argv[2]" = "on" -o "$argv[2]" = "off"
+    eval (command ${CMD_NAME} git $argv[2] $argv[3] | source)
   else
     command ${CMD_NAME} $argv
   end
@@ -212,6 +218,8 @@ ${MARKER_END}`,
 ${CMD_NAME}() {
   if [ "$1" = "switch" ]; then
     eval "$(command ${CMD_NAME} model switch "$2")"
+  elif [ "$1" = "git" ] && [ "$2" = "on" -o "$2" = "off" ]; then
+    eval "$(command ${CMD_NAME} git "$2" "$3")"
   else
     command ${CMD_NAME} "$@"
   fi
@@ -223,6 +231,10 @@ ${MARKER_END}`,
 alias ${CMD_NAME} '\\
   if ("$1" == "switch") then \\
     eval \`command ${CMD_NAME} model switch $2\` \\
+  else if ("$1" == "git" && "$2" == "on") then \\
+    eval \`command ${CMD_NAME} git on $3\` \\
+  else if ("$1" == "git" && "$2" == "off") then \\
+    eval \`command ${CMD_NAME} git off\` \\
   else \\
     command ${CMD_NAME} $* \\
   endif \\
@@ -235,6 +247,9 @@ function ${CMD_NAME} {
   param([Parameter(ValueFromRemainingArguments=$true)]$args)
   if ($args[0] -eq "switch") {
     $output = & ${CMD_NAME}.cmd model switch $args[1] 2>&1 | Out-String
+    Invoke-Expression $output
+  } elseif ($args[0] -eq "git" -and ($args[1] -eq "on" -or $args[1] -eq "off")) {
+    $output = & ${CMD_NAME}.cmd git $args[1] $args[2] 2>&1 | Out-String
     Invoke-Expression $output
   } else {
     & ${CMD_NAME}.cmd @args
